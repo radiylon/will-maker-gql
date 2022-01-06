@@ -27,7 +27,6 @@ const resolvers = {
 
       // validate for unique username
       const existingUser = await User.findOne({ username: username });
-      console.log('existingUser', existingUser);
       if (existingUser) {
         // UserInputError for apollo server-side validation
         throw new UserInputError('Username already taken', {
