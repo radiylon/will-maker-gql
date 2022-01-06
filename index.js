@@ -1,36 +1,10 @@
 const { ApolloServer } = require('apollo-server');
-const gql = require('graphql-tag');
 const mongoose = require('mongoose');
-// dependencies
+// mongo connection string
 const { willmakerDb } = require('./config.js');
-const Will = require('./models/will');
-
-const typeDefs = gql`
-  type Query {
-    getWills: [Will]
-  }
-
-  type Will {
-    id: ID!
-    body: String!
-    createdAt: String!
-    username: String!
-  }
-`
-
-const resolvers = {
-  Query: {
-    async getWills() {
-      try {
-        const wills = await Will.find();
-        return wills;
-      } catch (err) {
-        console.log('Error: ', err);
-        throw new Error(err);
-      }
-    },
-  }
-}
+// types and resolvers
+const typeDefs = require('./gql/types');
+const resolvers = require('./gql/resolvers');
 
 const server = new ApolloServer({
   typeDefs,
