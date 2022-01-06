@@ -20,6 +20,12 @@ const resolvers = {
     registerUser: async (_, { input }, context) => {
       const { username, email, password, confirmPassword } = input;
 
+      // TODO: validate for unique email (is this best practice when there's already a username?)
+      // TODO: validate for empty username
+      // TODO: validate for empty email
+      // TODO: validate for empty password
+      // TODO: validate for email format
+
       // validate for unique username
       const existingUser = await User.findOne({ username: username });
       console.log('existingUser', existingUser);
