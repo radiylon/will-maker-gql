@@ -1,8 +1,8 @@
 const Will = require('../../models/will');
 
-module.exports = {
+const resolvers = {
   Query: {
-    async getWills() {
+    getWills: async () => {
       try {
         const wills = await Will.find();
         return wills;
@@ -10,6 +10,19 @@ module.exports = {
         console.log('Error: ', err);
         throw new Error(err);
       }
+    }
+  },
+  Mutation: {
+    createWill: async () => {
+      // TODO
     },
+    updateWill: async () => {
+      // TODO
+    },
+    deleteWill: async () => {
+      // TODO
+    }
   }
 }
+
+module.exports = resolvers;

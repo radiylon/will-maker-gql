@@ -1,8 +1,8 @@
 const User = require('../../models/will');
 
-module.exports = {
+const resolvers = {
   Query: {
-    async getUsers() {
+    getUsers: async () => {
       try {
         const users = await User.find();
         return users;
@@ -10,6 +10,13 @@ module.exports = {
         console.log('Error: ', err);
         throw new Error(err);
       }
-    },
+    }
+  },
+  Mutation: {
+    registerUser: async () => {
+      // TODO
+    }
   }
 }
+
+module.exports = resolvers;
