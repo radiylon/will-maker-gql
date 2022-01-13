@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose');
 const user = require('./user');
-const { checkAuthHeader } = require('../util/helpers');
+const helpers = require('../util/helpers');
 const { AuthenticationError } = require('apollo-server');
 
 const willSchema = new Schema({
@@ -31,7 +31,7 @@ const willSchema = new Schema({
 
 willSchema.statics.updateWill = async function (id, input, context) {
   // check if user has auth
-  const user = checkAuthHeader(context);
+  const user = helpers.checkAuthHeader(context);
   try {
     let will = await this.findById(id);
     if (will) {

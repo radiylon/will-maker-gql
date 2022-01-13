@@ -1,7 +1,7 @@
 const { AuthenticationError } = require('apollo-server');
 const Will = require('../../models/will');
-const { checkAuthHeader } = require('../../util/helpers');
 const helpers = require('../../util/helpers');
+
 
 const resolvers = {
   Query: {
@@ -27,7 +27,7 @@ const resolvers = {
   Mutation: {
     createWill: async (_, { input }, context) => {
       // check if user has auth
-      const user = checkAuthHeader(context);
+      const user = helpers.checkAuthHeader(context);
       try {
         // create new will
         const newWill = new Will({
@@ -51,7 +51,7 @@ const resolvers = {
     },
     deleteWill: async (_, { id }, context) => {
       // check if user has auth
-      const user = checkAuthHeader(context);
+      const user = helpers.checkAuthHeader(context);
       try {
         const will = await Will.findById(id);
         if (user.id === will.userId.toString()) {
