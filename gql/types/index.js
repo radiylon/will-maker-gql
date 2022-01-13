@@ -2,16 +2,21 @@ const { gql } = require('apollo-server');
 
 module.exports = gql`
   type Query {
-    # User
+    # user queries
     getUsers: [User]!
-    # Will
+    # will queries
     getWill(id: String!): Will!
     getWills: [Will]!
   }
 
   type Mutation {
+    # user mutations
     registerUser(input: RegisterInput): User!
     loginUser(username: String!, password: String!): User!
+    # will mutations
+    createWill(input: WillInput): Will!
+    updateWill(id: ID!, input: WillInput): Will! 
+    deleteWill(id: String!): Will!
   }
 
   type User {
@@ -36,7 +41,7 @@ module.exports = gql`
     firstName: String!
     middleName: String
     lastName: String!
-    suffix: String!
+    suffix: String
     preferredName: String!
     birthDate: String! # Date
     relationshipStatus: String!
@@ -47,11 +52,47 @@ module.exports = gql`
     phoneNumber: String!
     isCompleted: Boolean!
     isEditable: Boolean!
-    createdAt: String!
+    createdAt: String! # Date
+    modifiedAt: String! # Date
   }
+
+  input WillInput {
+    firstName: String!
+    middleName: String
+    lastName: String!
+    suffix: String
+    preferredName: String
+    birthDate: String! # Date
+    relationshipStatus: String!
+    hasChildren: Boolean!
+    children: [ChildInput]
+    stateOfResidence: String!
+    hasAttorneyAddOn: Boolean!
+    phoneNumber: String!
+    isCompleted: Boolean!
+    isEditable: Boolean!
+  }
+
+"""
+  type Will {
+    id: ID!
+    body: String!
+    createdAt: String!
+    username: String!
+  }
+
+  input WillInput {
+    body: String!
+  }
+"""
 
   type Child {
     id: ID!
+    fullName: String!
+    birthDate: String! # Date
+  }
+
+  input ChildInput {
     fullName: String!
     birthDate: String! # Date
   }

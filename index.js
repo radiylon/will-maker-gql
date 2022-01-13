@@ -8,7 +8,8 @@ const resolvers = require('./gql/resolvers');
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: ({ req }) => ({ req }) // context for accessing auth headers
 });
 
 mongoose.connect(willmakerDb, { useNewUrlParser: true })

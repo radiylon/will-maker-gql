@@ -10,7 +10,7 @@ const resolvers = {
   Query: {
     getUsers: async () => {
       try {
-        const users = await User.find();
+        const users = await User.find().sort({ createdAt: -1 });
         return users;
       } catch (err) {
         console.log('Error: ', err);
