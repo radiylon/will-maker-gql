@@ -1,26 +1,25 @@
 const { model, Schema } = require('mongoose');
 
-const willSchema = new Schema({ 
-  body: String,
-  username: String,
+const willSchema = new Schema({
+  firstName: String,
+  middleName: String,
+  lastName: String,
+  suffix: String,
+  preferredName: String,
+  birthDate: Date,
+  relationshipStatus: String,
+  hasChildren: Boolean,
+  children: [{
+    fullName: String,
+    birthDate: Date,
+  }],
+  stateOfResidence: String,
+  hasAttorneyAddOn: Boolean,
+  phoneNumber: String,
+  isCompleted: Boolean,
+  isEditable: Boolean,
   createdAt: String,
-  comments: [
-    {
-      body: String,
-      username: String,
-      createdAt: String,
-    }
-  ],
-  likes: [
-    {
-      username: String,
-      createdAt: String,
-    }
-  ],
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'users',
-  }
+  // modifiedAt: String,
 });
 
 module.exports = model('Will', willSchema);

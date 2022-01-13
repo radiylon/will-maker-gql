@@ -4,8 +4,9 @@ const userSchema = new Schema({
   username: String,
   password: String,
   email: String,
+  token: String,
   createdAt: String,
-  modifiedAt: String,
+  // TODO: modifiedAt: String,
 });
 
 module.exports = model('User', userSchema);

@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
 const User = require('../../models/user');
 const config = require('../../config');
+const helpers = require('../../util/helpers');
+const validators = require('../../util/validators');
 
 const resolvers = {
   Query: {
@@ -20,10 +22,11 @@ const resolvers = {
     registerUser: async (_, { input }) => {
       const { username, email, password, confirmPassword } = input;
 
-      // TODO: validate matching password/confirmPassword
-      // TODO: validate for unique email (is this best practice when there's already a username?)
-      // TODO: validate for empty username, email, password
-      // TODO: validate for email format '@asdf.com'
+      // validate user entered registration
+      const { errors, valid } = validators.validateRegisterInput(username, email, password, confirmPassword);
+      if (!valid) {
+        throw new UserInputError('Error(s)', { errors: errors });
+      }
 
       // validate for unique username
       const existingUser = await User.findOne({ username: username });
@@ -50,13 +53,8 @@ const resolvers = {
       // save document to db
       const result = await newUser.save();
 
-      // TODO: make a helper for generating token
       // generate unique token from currenetUser using jwt
-      const token = jwt.sign({
-        id: result.id,
-        username: result.username,
-        email: result.email
-      }, config.jwtSecretKey, { expiresIn: '1d' });
+      const token = helpers.generateToken(result);
 
       return {
         ...result._doc,
@@ -65,28 +63,29 @@ const resolvers = {
       }
     },
     loginUser: async (_, { username, password }) => {
+      // validate login
+      const { errors, valid } = validators.validateLoginInput(username, password);
+      if (!valid) {
+        throw new UserInputError('Error(s)', { errors: errors });
+      }
+      // check if user exists
       const user = await User.findOne({ username: username });
-
-      // TODO: validate when user doesn't exist
+      // throw error if user doesn't exist
       if (!user) {
-        // throw error, username doesn't exist
+        errors.general = 'Username or password is incorrect';
+        throw new UserInputError('Username or password is incorrect', { errors: errors });
       }
-      
+
       // decrypt password and check if it matches
-      const isMatching = await bcrypt.compare(password, user.password);
-
-      // TODO: validate when password is incorrect
-      if (!isMatching) {
-        // throw error, password is incorrect
+      const isPasswordMatching = await bcrypt.compare(password, user.password);
+      // throw error if password is incorrect      
+      if (!isPasswordMatching) {
+        errors.general = 'Username or password is incorrect';
+        throw new UserInputError('Username or password is incorrect', { errors: errors });
       }
 
-      // TODO: make a helper for generating token
       // generate unique token from currentUser using jwt
-      const token = jwt.sign({
-        id: user.id,
-        username: user.username,
-        email: user.email
-      }, config.jwtSecretKey, { expiresIn: '1d' });
+      const token = helpers.generateToken(user);
 
       return {
         ...user._doc,

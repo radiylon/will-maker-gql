@@ -2,6 +2,15 @@ const Will = require('../../models/will');
 
 const resolvers = {
   Query: {
+    getWill: async (_, { id }) => {
+      try {
+        const will = await Will.findById(id);
+        return will;
+      } catch (err) {
+        console.log('Error: ', err);
+        throw new Error(err);
+      }
+    },
     getWills: async () => {
       try {
         const wills = await Will.find();
@@ -13,7 +22,7 @@ const resolvers = {
     }
   },
   Mutation: {
-    createWill: async () => {
+    createWill: async (_, { input }) => {
       // TODO
     },
     updateWill: async () => {
