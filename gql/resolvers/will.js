@@ -30,6 +30,11 @@ const resolvers = {
       // check if user has auth
       const user = helpers.checkAuthHeader(context);
       try {
+        const existingWill = await Will.find({ userId: user.id });
+        if (existingWill?.length >= 1) {
+          // user already has a will
+          throw new Error('User already has a will');
+        }
         // create new will
         const newWill = new Will({
           ...input,

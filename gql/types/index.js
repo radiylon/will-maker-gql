@@ -25,6 +25,7 @@ module.exports = gql`
     password: String!
     email: String!
     token: String!
+    isAdmin: Boolean
     createdAt: String!
     # modifiedAt: String!
   }
@@ -34,6 +35,7 @@ module.exports = gql`
     password: String!
     confirmPassword: String!
     email: String!
+    isAdmin: Boolean
   }
 
   type Will {
@@ -54,6 +56,7 @@ module.exports = gql`
     isEditable: Boolean!
     createdAt: String! # Date
     modifiedAt: String! # Date
+    userId: ID!
   }
 
   input WillInput {

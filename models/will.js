@@ -36,7 +36,8 @@ willSchema.statics.updateWill = async function (id, input, context) {
     let will = await this.findById(id);
     if (will) {
       if (user.id === will.userId.toString()) {
-        return await this.findOneAndUpdate({ id }, input, { new: true });
+        const newWill = await this.findOneAndUpdate({ _id: id }, input);
+        return newWill;
       } else {
         throw new AuthenticationError('Invalid action');
       }

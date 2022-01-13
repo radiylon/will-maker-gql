@@ -5,6 +5,10 @@ const userSchema = new Schema({
   password: String,
   email: String,
   token: String,
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: String,
   // TODO: modifiedAt: String,
 });
