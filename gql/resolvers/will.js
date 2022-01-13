@@ -25,6 +25,7 @@ const resolvers = {
     }
   },
   Mutation: {
+    // TODO: move to schema statics
     createWill: async (_, { input }, context) => {
       // check if user has auth
       const user = helpers.checkAuthHeader(context);
@@ -49,6 +50,7 @@ const resolvers = {
       const will = await Will.updateWill(id, input, context);
       return will;
     },
+    // TODO: move to schema statics
     deleteWill: async (_, { id }, context) => {
       // check if user has auth
       const user = helpers.checkAuthHeader(context);
