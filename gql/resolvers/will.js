@@ -30,11 +30,15 @@ const resolvers = {
       // check if user has auth
       const user = helpers.checkAuthHeader(context);
       try {
-        const existingWill = await Will.find({ userId: user.id });
-        if (existingWill?.length >= 1) {
-          // user already has a will
-          throw new Error('User already has a will');
+        // check for existing will for standard users
+        if (!user.isAdmin) {
+          const existingWill = await Will.find({ userId: user.id });
+          if (existingWill?.length >= 1) {
+            // user already has a will
+            throw new Error('User already has a will');
+          }
         }
+        
         // create new will
         const newWill = new Will({
           ...input,
@@ -61,7 +65,7 @@ const resolvers = {
       const user = helpers.checkAuthHeader(context);
       try {
         const will = await Will.findById(id);
-        if (user.id === will.userId.toString()) {
+        if (user.id === will.userId.toString() || user.isAdmin) {
           return await will.delete();
         } else {
           throw new AuthenticationError('Invalid action');

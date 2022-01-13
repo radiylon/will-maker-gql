@@ -20,7 +20,7 @@ const resolvers = {
   },
   Mutation: {
     registerUser: async (_, { input }) => {
-      const { username, email, password, confirmPassword } = input;
+      const { username, email, password, confirmPassword, isAdmin } = input;
 
       // validate user entered registration
       const { errors, valid } = validators.validateRegisterInput(username, email, password, confirmPassword);
@@ -46,6 +46,7 @@ const resolvers = {
       const newUser = new User({
         username,
         email,
+        isAdmin,
         password: hashedPassword,
         createdAt: new Date().toISOString()
       });
