@@ -35,7 +35,7 @@ willSchema.statics.updateWill = async function (id, input, context) {
   try {
     let will = await this.findById(id);
     if (will) {
-      if (user.id === will.userId.toString()) {
+      if (user.id === will.userId.toString() || user.isAdmin) {
         const newWill = await this.findOneAndUpdate({ _id: id }, input);
         return newWill;
       } else {
