@@ -19,28 +19,31 @@ const willSchema = new Schema({
   stateOfResidence: String,
   hasAttorneyAddOn: Boolean,
   phoneNumber: String,
+  email: String,
   isCompleted: Boolean,
   isEditable: Boolean,
   createdAt: String,
   modifiedAt: String,
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: user,
-  }
+  // userId: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: user,
+  // }
 });
 
 willSchema.statics.updateWill = async function (id, input, context) {
   // check if user has auth
-  const user = helpers.checkAuthHeader(context);
+  // const user = helpers.checkAuthHeader(context);
   try {
     let will = await this.findById(id);
     if (will) {
-      if (user.id === will.userId.toString() || user.isAdmin) {
-        const newWill = await this.findOneAndUpdate({ _id: id }, input);
-        return newWill;
-      } else {
-        throw new AuthenticationError('Invalid action');
-      }
+      const newWill = await this.findOneAndUpdate({ _id: id }, input);
+      return newWill;
+      // if (user.id === will.userId.toString() || user.isAdmin) {
+      //   const newWill = await this.findOneAndUpdate({ _id: id }, input);
+      //   return newWill;
+      // } else {
+      //   throw new AuthenticationError('Invalid action');
+      // }
     } else {
       throw new Error('Will does not exist');
     }

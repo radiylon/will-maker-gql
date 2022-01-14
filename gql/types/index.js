@@ -5,7 +5,7 @@ module.exports = gql`
     # user queries
     getUsers: [User]!
     # will queries
-    getWill(id: String!): Will!
+    getWill(id: ID!): Will!
     getWills: [Will]!
   }
 
@@ -39,55 +39,44 @@ module.exports = gql`
   }
 
   type Will {
-    id: ID!
-    firstName: String!
+    id: ID
+    firstName: String
     middleName: String
-    lastName: String!
-    suffix: String
-    preferredName: String!
-    birthDate: String! # Date
-    relationshipStatus: String!
-    hasChildren: Boolean!
-    children: [Child]
-    stateOfResidence: String!
-    hasAttorneyAddOn: Boolean!
-    phoneNumber: String!
-    isCompleted: Boolean!
-    isEditable: Boolean!
-    createdAt: String! # Date
-    modifiedAt: String! # Date
-    userId: ID!
-  }
-
-  input WillInput {
-    firstName: String!
-    middleName: String
-    lastName: String!
+    lastName: String
     suffix: String
     preferredName: String
-    birthDate: String! # Date
-    relationshipStatus: String!
-    hasChildren: Boolean!
-    children: [ChildInput]
-    stateOfResidence: String!
-    hasAttorneyAddOn: Boolean!
-    phoneNumber: String!
-    isCompleted: Boolean!
-    isEditable: Boolean!
-  }
-
-"""
-  type Will {
-    id: ID!
-    body: String!
-    createdAt: String!
-    username: String!
+    birthDate: String # Date
+    phoneNumber: String
+    email: String
+    relationshipStatus: String
+    hasChildren: Boolean
+    children: [Child]
+    stateOfResidence: String
+    hasAttorneyAddOn: Boolean
+    isCompleted: Boolean
+    isEditable: Boolean
+    createdAt: String # Date
+    modifiedAt: String # Date
+    # userId: ID!
   }
 
   input WillInput {
-    body: String!
+    firstName: String
+    middleName: String
+    lastName: String
+    suffix: String
+    preferredName: String
+    birthDate: String # Date
+    phoneNumber: String
+    email: String
+    relationshipStatus: String
+    hasChildren: Boolean
+    children: [ChildInput]
+    stateOfResidence: String
+    hasAttorneyAddOn: Boolean
+    isCompleted: Boolean
+    isEditable: Boolean
   }
-"""
 
   type Child {
     id: ID!

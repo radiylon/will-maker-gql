@@ -28,22 +28,22 @@ const resolvers = {
     // TODO: move to schema statics
     createWill: async (_, { input }, context) => {
       // check if user has auth
-      const user = helpers.checkAuthHeader(context);
+      // const user = helpers.checkAuthHeader(context);
       try {
         // check for existing will for standard users
-        if (!user.isAdmin) {
-          const existingWill = await Will.find({ userId: user.id });
-          if (existingWill?.length >= 1) {
-            // user already has a will
-            throw new Error('User already has a will');
-          }
-        }
+        // if (!user.isAdmin) {
+        //   const existingWill = await Will.find({ userId: user.id });
+        //   if (existingWill?.length >= 1) {
+        //     // user already has a will
+        //     throw new Error('User already has a will');
+        //   }
+        // }
         
         // create new will
         const newWill = new Will({
           ...input,
-          userId: user.id,
-          username: user.username,
+          // userId: user.id,
+          // username: user.username,
           createdAt: new Date().toISOString()
         });
         // save document to db
@@ -62,14 +62,16 @@ const resolvers = {
     // TODO: move to schema statics
     deleteWill: async (_, { id }, context) => {
       // check if user has auth
-      const user = helpers.checkAuthHeader(context);
+      // const user = helpers.checkAuthHeader(context);
       try {
         const will = await Will.findById(id);
-        if (user.id === will.userId.toString() || user.isAdmin) {
-          return await will.delete();
-        } else {
-          throw new AuthenticationError('Invalid action');
-        }
+        return await will.delete();
+
+        // if (user.id === will.userId.toString() || user.isAdmin) {
+        //   return await will.delete();
+        // } else {
+        //   throw new AuthenticationError('Invalid action');
+        // }
       } catch (err) {
         throw new Error(err);
       }
