@@ -12,10 +12,12 @@ const server = new ApolloServer({
   context: ({ req }) => ({ req }) // context for accessing auth headers
 });
 
+const PORT = process.env.PORT || 5001;
+
 mongoose.connect(willmakerDb, { useNewUrlParser: true })
   .then(() => {
     console.log('MongoDB connected...');
-    return server.listen({ port: 5001 });
+    return server.listen({ port: PORT });
   })
   .then((res) => {
     console.log(`Server running at ${res.url}`);
