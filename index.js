@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 // types and resolvers
 const typeDefs = require('./gql/types');
 const resolvers = require('./gql/resolvers');
+const { MONGODB } = require('./config.js');
+
 
 const server = new ApolloServer({
   typeDefs,
@@ -12,11 +14,14 @@ const server = new ApolloServer({
 
 const PORT = process.env.PORT || 5001;
 
-mongoose.connect(process.env.willmakerDb, { useNewUrlParser: true })
+mongoose.connect(MONGODB, { useNewUrlParser: true })
   .then(() => {
     console.log('MongoDB connected...');
     return server.listen({ port: PORT });
   })
   .then((res) => {
     console.log(`Server running at ${res.url}`);
+  })
+  .catch((err) => {
+    console.log(err);
   });
