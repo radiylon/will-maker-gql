@@ -1,7 +1,5 @@
 const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
-// mongo connection string
-const { willmakerDb } = require('./config.js');
 // types and resolvers
 const typeDefs = require('./gql/types');
 const resolvers = require('./gql/resolvers');
@@ -14,7 +12,7 @@ const server = new ApolloServer({
 
 const PORT = process.env.PORT || 5001;
 
-mongoose.connect(willmakerDb, { useNewUrlParser: true })
+mongoose.connect(process.env.willmakerDb, { useNewUrlParser: true })
   .then(() => {
     console.log('MongoDB connected...');
     return server.listen({ port: PORT });
