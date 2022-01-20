@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '.env' });
 const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
 // main
@@ -7,7 +8,6 @@ const will = require('./models/will');
 const user = require('./models/user');
 const helpers = require('./util/helpers');
 // const { MONGODB } = require('./config.js');
-
 
 const server = new ApolloServer({
   typeDefs,
@@ -20,6 +20,7 @@ const server = new ApolloServer({
 });
 
 const PORT = process.env.PORT || 5001;
+const URL = `${process.env.MONGODB}`;
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true })
   .then(() => {
