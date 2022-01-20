@@ -12,7 +12,7 @@ module.exports = gql`
   type Mutation {
     # user mutations
     registerUser(input: RegisterInput): User!
-    loginUser(username: String!, password: String!): User!
+    loginUser(username: String, password: String): User!
     # will mutations
     createWill(input: WillInput): Will!
     updateWill(id: ID!, input: WillInput): Will! 
