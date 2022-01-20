@@ -52,7 +52,7 @@ const resolvers = {
       // save document to db
       const result = await newUser.save();
 
-      // generate unique token from currenetUser using jwt
+      // generate unique token from currentUser using jwt
       const token = helpers.generateToken(result);
 
       return {
