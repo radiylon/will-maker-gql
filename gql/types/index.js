@@ -57,7 +57,7 @@ module.exports = gql`
     isEditable: Boolean
     createdAt: String # Date
     modifiedAt: String # Date
-    # userId: ID!
+    userId: ID!
   }
 
   input WillInput {
