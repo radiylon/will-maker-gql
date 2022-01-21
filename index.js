@@ -20,7 +20,6 @@ const server = new ApolloServer({
 });
 
 const PORT = process.env.PORT || 5001;
-const URL = `${process.env.MONGODB}`;
 
 mongoose.connect(process.env.MONGODB, { useNewUrlParser: true })
   .then(() => {

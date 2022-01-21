@@ -6,6 +6,7 @@ module.exports = gql`
     getUsers: [User]!
     # will queries
     getWill(id: ID!): Will!
+    getWillByUserId(id: ID!): Will!
     getWills: [Will]!
   }
 

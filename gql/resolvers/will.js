@@ -1,22 +1,26 @@
-const { AuthenticationError } = require('apollo-server');
-const Will = require('../../models/will');
-const helpers = require('../../util/helpers');
-
-
 const resolvers = {
   Query: {
-    getWill: async (_, { id }) => {
+    getWill: async (_, { id }, { dataSources }) => {
       try {
-        const will = await Will.findById(id);
+        const will = await dataSources.Will.findById(id);
         return will;
       } catch (err) {
         console.log('Error: ', err);
         throw new Error(err);
       }
     },
-    getWills: async () => {
+    getWillByUserId: async (_, { id }, { dataSources }) => {
       try {
-        const wills = await Will.find().sort({ createdAt: -1 });
+        const will = await dataSources.Will.findOne({ userId: id });
+        return will;
+      } catch (err) {
+        console.log('Error: ', err);
+        throw new Error(err);
+      }
+    },
+    getWills: async (_, {}, { dataSources }) => {
+      try {
+        const wills = await dataSources.Will.find().sort({ createdAt: -1 });
         return wills;
       } catch (err) {
         console.log('Error: ', err);
@@ -35,7 +39,6 @@ const resolvers = {
       const will = await dataSources.Will.updateWill(id, input, authHeader);
       return will;
     },
-    // TODO: move to schema statics
     deleteWill: async (_, { id }, { authHeader, dataSources }) => {
       const will = await dataSources.Will.deleteWill(id, authHeader);
       return will;

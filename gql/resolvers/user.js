@@ -66,8 +66,6 @@ const resolvers = {
       console.log('password1', password);
       // validate login
       const { errors, valid } = validators.validateLoginInput(username, password);
-      console.log('errors', errors);
-      console.log('valid', valid);
       if (!valid) {
         throw new UserInputError('Error(s)', { errors: errors });
       }
