@@ -24,9 +24,6 @@ module.exports = {
     // check if there are errors, set valid status
     const valid = Object.keys(errors).length === 0;
 
-    console.log('errors', errors);
-    console.log('valid', valid);
-
     return { errors, valid };
   },
   validateLoginInput(username, password) {
