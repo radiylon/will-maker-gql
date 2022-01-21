@@ -27,6 +27,8 @@ module.exports = {
     return { errors, valid };
   },
   validateLoginInput(username, password) {
+    console.log('username2', username);
+    console.log('password2', password);
     const errors = {};
     // validate username
     if (username.trim() === '') {

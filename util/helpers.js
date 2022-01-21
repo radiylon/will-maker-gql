@@ -10,7 +10,6 @@ module.exports = {
     }
   },
   generateToken(user) {
-    console.log('generateToken user', user);
     const token = jwt.sign({
       id: user.id,
       username: user.username,
