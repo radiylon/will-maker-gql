@@ -7,7 +7,6 @@ const resolvers = require('./gql/resolvers');
 const will = require('./models/will');
 const user = require('./models/user');
 const helpers = require('./util/helpers');
-// const { MONGODB } = require('./config.js');
 
 const server = new ApolloServer({
   typeDefs,
