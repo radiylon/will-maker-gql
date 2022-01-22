@@ -21,6 +21,6 @@ Install dependencies.
 `npm run start` runs the app normally
 `npm run serve` runs the app with nodemon for fast refresh
 
-You should see `MongoDB connected... ` and a corresponding server is running message.
+You should see `MongoDB connected...` and a corresponding server is running message.
 
 Once the app is running, open [http://localhost:5001](http://localhost:5001) to view the project in your browser.  Note: Might require an additional click to get into Apollo Studio.
