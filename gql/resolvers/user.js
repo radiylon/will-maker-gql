@@ -40,6 +40,7 @@ const resolvers = {
       // hash password before storing
       const hashedPassword = await bcrypt.hash(password, 12);
 
+      // TODO: maybe user dataSources instead of the model directly
       // generate newUser based on input
       const newUser = new User({
         username,
